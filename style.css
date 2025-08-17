@@ -81,7 +81,7 @@ details.no-arrow > summary {
     align-items: center;
     margin: 0;
     padding: 0;
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 details summary h1,
@@ -91,7 +91,7 @@ details summary h3 {
     padding: 0;
     display: inline;
     font-weight: normal;
-     margin-left: 20px;
+     margin-left: 10px;
 }
 
 details summary > div,
@@ -100,24 +100,24 @@ details summary > h2,
 details summary > h3 {
     display: inline-block;
     cursor: pointer;
-     margin-left: 20px;
+     margin-left: 10px;
 }
 
 details details {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 details {
     width: fit-content;
     max-width: 100%;
-     margin-left: 20px;
+     margin-left: 10px;
 }
 
 .text-style {
     font-family: 'Times New Roman', Times, serif;
     font-size: 12px;
     margin: 0;
-    padding-left: 20px;
+    padding-left: 10px;
 }
 
 @media (max-width: 768px) {
@@ -197,4 +197,5 @@ details {
     font-size: 2em;
     cursor: pointer;
 }
+
 
