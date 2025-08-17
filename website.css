@@ -1,0 +1,152 @@
+
+
+
+
+
+p {
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 10px;
+    margin-bottom: 0; 
+     }
+
+.home-button {
+background-color: grey;
+border: none;
+height: 50px;
+width: 50px;
+cursor: pointer;
+margin-bottom: 10px;
+}
+
+.header {
+color: black;
+font-size: 36pt;
+font-weight: bold;
+}
+
+.marquee1 {
+color: black;
+font-size: 12pt;
+font-weight: bold;
+width: 200px;
+}
+
+.home-hyperlinks {
+color: black;
+font-size: 12pt;
+width: 500px;
+}
+
+.box{
+  background-color: #ffffff;
+  margin: 0 auto;
+  width: 1000px;
+  height: 700px;
+  position: relative;
+  border-radius: 0px;
+  border: 1px solid #111;
+  overflow: hidden;
+}
+
+.box b {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 0%;
+  background-color: #39FF14;
+  position: absolute;
+  -webkit-animation: moveX 7s linear 0s infinite alternate, moveY 11.9s linear 0s infinite alternate;
+  -moz-animation: moveX 7s linear 0s infinite alternate, moveY 11.9s linear 0s infinite alternate;
+  -o-animation: moveX 7s linear 0s infinite alternate, moveY 11.9s linear 0s infinite alternate;
+  animation: moveX 7s linear 0s infinite alternate, moveY 11.9s linear 0s infinite alternate;
+  box-shadow: 
+  0 0 0 rgba(0, 60, 255, 0.7),
+  0 0 20px rgba(0, 60, 255, 0.5),
+  0 0 40px rgba(0, 60, 255, 0.4),
+  0 0 60px rgba(0, 60, 255, 0.3),
+  0 0 80px rgba(0, 60, 255, 0.2),
+  0 0 100px rgba(0, 60, 255, 0.1),
+  0 0 120px rgba(0, 60, 255, 0);
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw;  /* Full viewport width */
+}
+
+@-webkit-keyframes moveX {
+  from { left: 0; } to { left: 950px; }
+}
+@-moz-keyframes moveX {
+  from { left: 0; } to { left: 950px; }
+}
+@-o-keyframes moveX {
+  from { left: 0; } to { left: 950px; }
+}
+@keyframes moveX {
+  from { left: 0; } to { left: 950px; }
+}
+
+@-webkit-keyframes moveY {
+  from { top: 0; } to { top: 650px; }
+}
+@-moz-keyframes moveY {
+  from { top: 0; } to { top: 650px; }
+}
+@-o-keyframes moveY {
+  from { top: 0; } to { top: 650px; }
+}
+@keyframes moveY {
+  from { top: 0; } to { top: 650px; }
+}
+  
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the content horizontally */
+  background-color: #f0f0f0;
+}
+
+.home-button, .header, a, .home-hyperlinks, .marquee1, .box, .cd {
+  width: 100%; /* Make each element take up the full width */
+  box-sizing: border-box;
+  margin-bottom: 20px; /* Add some spacing between elements */
+}
+
+.column {
+  padding: 20px;
+  text-align: center; /* Center the content within the column */
+}
+
+.home-button {
+  /* Add your button styles here */
+}
+
+.header {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.home-hyperlinks {
+  font-size: 16px;
+}
+
+.marquee1 {
+  font-size: 18px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+
+
+
+
+
+
