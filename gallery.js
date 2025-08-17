@@ -34,8 +34,8 @@ function initGallery(galleryId, lightboxId, jsonFile) {
       video.src = item.src;
       video.controls = true;
       video.autoplay = false;
-      video.style.maxWidth = '90vw';
-      video.style.maxHeight = '90vh';
+      video.style.maxWidth = '90%';
+      video.style.maxHeight = '80%';
       video.className = 'lightbox-img';
       lightbox.insertBefore(video, lightboxCaption);
       lightboxMedia = video;
@@ -64,7 +64,7 @@ function initGallery(galleryId, lightboxId, jsonFile) {
         thumb.style.height = 'auto';
         thumb.style.objectFit = 'cover';
         thumb.style.cursor = 'pointer';
-        thumb.poster = `${item.src.replace(/\.[^.]+$/, '.jpg')}`; // optional poster
+        thumb.poster = `${item.src.replace(/\.[^.]+$/, '.jpg')}`; 
       }
 
       thumb.alt = item.file;
@@ -80,28 +80,33 @@ function initGallery(galleryId, lightboxId, jsonFile) {
     });
   }
 
-fetch(jsonFile)
-  .then(res => res.json())
-  .then(data => {
-    mediaItems = data.map(item => {
-      const ext = item.file.split('.').pop().toLowerCase();
-      return {
-        ...item,
-        type: ['jpg','jpeg','png','gif'].includes(ext) ? 'image' : 'video',
-        src: item.file    // use the filename directly (image is in the same folder as index.html)
-      };
-    });
+  // Determine the folder from the JSON filename
+  function getFolderFromJSON(filename) {
+    if (filename.toLowerCase().includes('repairs')) return 'repairs';
+    if (filename.toLowerCase().includes('cardboard')) return 'cardboard';
+    if (filename.toLowerCase().includes('campus')) return 'campus';
+    return ''; // fallback
+  }
 
-    mediaItems.sort((a,b) => {
-      const timeA = a.dateTaken ? new Date(a.dateTaken.year,a.dateTaken.month-1,a.dateTaken.day,a.dateTaken.hour,a.dateTaken.minute,a.dateTaken.second).getTime() : 0;
-      const timeB = b.dateTaken ? new Date(b.dateTaken.year,b.dateTaken.month-1,b.dateTaken.day,b.dateTaken.hour,b.dateTaken.minute,b.dateTaken.second).getTime() : 0;
-      return timeB - timeA;
-    });
+  const folder = getFolderFromJSON(jsonFile);
 
-    buildGallery();
-  })
-  .catch(err => console.error('Error loading JSON:', err));
+  fetch(jsonFile)
+    .then(res => res.json())
+    .then(data => {
+      mediaItems = data.map(item => {
+        const ext = item.file.split('.').pop().toLowerCase();
+        return {
+          ...item,
+          type: ['jpg','jpeg','png','gif'].includes(ext) ? 'image' : 'video',
+          src: folder ? `${folder}/${item.file}` : item.file
+        };
+      });
 
+      mediaItems.sort((a,b) => {
+        const timeA = a.dateTaken ? new Date(a.dateTaken.year,a.dateTaken.month-1,a.dateTaken.day,a.dateTaken.hour,a.dateTaken.minute,a.dateTaken.second).getTime() : 0;
+        const timeB = b.dateTaken ? new Date(b.dateTaken.year,b.dateTaken.month-1,b.dateTaken.day,b.dateTaken.hour,b.dateTaken.minute,b.dateTaken.second).getTime() : 0;
+        return timeB - timeA;
+      });
 
       buildGallery();
     })
@@ -125,4 +130,3 @@ fetch(jsonFile)
 initGallery('repairs-gallery','repairs-lightbox','repairs.json');
 initGallery('cardboard-gallery','cardboard-lightbox','2020-03-16_Cardboard-Packaging.json');
 initGallery('campus-gallery','campus-lightbox','2022-06-11_CampusPack.json');
-
