@@ -80,23 +80,28 @@ function initGallery(galleryId, lightboxId, jsonFile) {
     });
   }
 
-  fetch(jsonFile)
-    .then(res => res.json())
-    .then(data => {
-      mediaItems = data.map(item => {
-        const ext = item.file.split('.').pop().toLowerCase();
-        return {
-          ...item,
-          type: ['jpg','jpeg','png','gif'].includes(ext) ? 'image' : 'video',
-          src: `${jsonFile.replace('.json','')}/${item.file}`
-        };
-      });
+fetch(jsonFile)
+  .then(res => res.json())
+  .then(data => {
+    mediaItems = data.map(item => {
+      const ext = item.file.split('.').pop().toLowerCase();
+      return {
+        ...item,
+        type: ['jpg','jpeg','png','gif'].includes(ext) ? 'image' : 'video',
+        src: item.file    // use the filename directly (image is in the same folder as index.html)
+      };
+    });
 
-      mediaItems.sort((a,b) => {
-        const timeA = a.dateTaken ? new Date(a.dateTaken.year,a.dateTaken.month-1,a.dateTaken.day,a.dateTaken.hour,a.dateTaken.minute,a.dateTaken.second).getTime() : 0;
-        const timeB = b.dateTaken ? new Date(b.dateTaken.year,b.dateTaken.month-1,b.dateTaken.day,b.dateTaken.hour,b.dateTaken.minute,b.dateTaken.second).getTime() : 0;
-        return timeB - timeA;
-      });
+    mediaItems.sort((a,b) => {
+      const timeA = a.dateTaken ? new Date(a.dateTaken.year,a.dateTaken.month-1,a.dateTaken.day,a.dateTaken.hour,a.dateTaken.minute,a.dateTaken.second).getTime() : 0;
+      const timeB = b.dateTaken ? new Date(b.dateTaken.year,b.dateTaken.month-1,b.dateTaken.day,b.dateTaken.hour,b.dateTaken.minute,b.dateTaken.second).getTime() : 0;
+      return timeB - timeA;
+    });
+
+    buildGallery();
+  })
+  .catch(err => console.error('Error loading JSON:', err));
+
 
       buildGallery();
     })
@@ -120,3 +125,4 @@ function initGallery(galleryId, lightboxId, jsonFile) {
 initGallery('repairs-gallery','repairs-lightbox','repairs.json');
 initGallery('cardboard-gallery','cardboard-lightbox','2020-03-16_Cardboard-Packaging.json');
 initGallery('campus-gallery','campus-lightbox','2022-06-11_CampusPack.json');
+
