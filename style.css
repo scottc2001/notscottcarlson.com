@@ -81,6 +81,7 @@ details.no-arrow > summary {
     align-items: center;
     margin: 0;
     padding: 0;
+    margin-left: 20px;
 }
 
 details summary h1,
@@ -90,6 +91,7 @@ details summary h3 {
     padding: 0;
     display: inline;
     font-weight: normal;
+     margin-left: 20px;
 }
 
 details summary > div,
@@ -98,6 +100,7 @@ details summary > h2,
 details summary > h3 {
     display: inline-block;
     cursor: pointer;
+     margin-left: 20px;
 }
 
 details details {
@@ -107,6 +110,7 @@ details details {
 details {
     width: fit-content;
     max-width: 100%;
+     margin-left: 20px;
 }
 
 .text-style {
@@ -193,3 +197,4 @@ details {
     font-size: 2em;
     cursor: pointer;
 }
+
