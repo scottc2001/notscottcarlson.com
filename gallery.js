@@ -11,9 +11,23 @@ function initGallery(galleryId, lightboxId, jsonFile) {
   let currentIndex = 0;
 
   function pad(num) { return num.toString().padStart(2, '0'); }
+
   function formatDate(dateObj) {
     if (!dateObj) return '[No Date]';
     return `${dateObj.year}:${pad(dateObj.month)}:${pad(dateObj.day)} ${pad(dateObj.hour)}:${pad(dateObj.minute)}:${pad(dateObj.second)}`;
+  }
+
+  function getFolderFromJSON(filename) {
+    switch (filename) {
+      case 'repairs.json':
+        return 'Repairs';
+      case '2020-03-16_Cardboard-Packaging.json':
+        return '2020-03-16_Cardboard-Packaging';
+      case '2022-06-11_CampusPack.json':
+        return 'Campus'; // adjust if folder name differs
+      default:
+        return '';
+    }
   }
 
   function openLightbox(index) {
@@ -64,7 +78,7 @@ function initGallery(galleryId, lightboxId, jsonFile) {
         thumb.style.height = 'auto';
         thumb.style.objectFit = 'cover';
         thumb.style.cursor = 'pointer';
-        thumb.poster = `${item.src.replace(/\.[^.]+$/, '.jpg')}`; 
+        thumb.poster = `${item.src.replace(/\.[^.]+$/, '.jpg')}`;
       }
 
       thumb.alt = item.file;
@@ -80,19 +94,11 @@ function initGallery(galleryId, lightboxId, jsonFile) {
     });
   }
 
-  // Determine the folder from the JSON filename
-  function getFolderFromJSON(filename) {
-    if (filename.toLowerCase().includes('repairs')) return 'repairs';
-    if (filename.toLowerCase().includes('cardboard')) return 'cardboard';
-    if (filename.toLowerCase().includes('campus')) return 'campus';
-    return ''; // fallback
-  }
-
-  const folder = getFolderFromJSON(jsonFile);
-
   fetch(jsonFile)
     .then(res => res.json())
     .then(data => {
+      const folder = getFolderFromJSON(jsonFile);
+
       mediaItems = data.map(item => {
         const ext = item.file.split('.').pop().toLowerCase();
         return {
@@ -102,9 +108,9 @@ function initGallery(galleryId, lightboxId, jsonFile) {
         };
       });
 
-      mediaItems.sort((a,b) => {
-        const timeA = a.dateTaken ? new Date(a.dateTaken.year,a.dateTaken.month-1,a.dateTaken.day,a.dateTaken.hour,a.dateTaken.minute,a.dateTaken.second).getTime() : 0;
-        const timeB = b.dateTaken ? new Date(b.dateTaken.year,b.dateTaken.month-1,b.dateTaken.day,b.dateTaken.hour,b.dateTaken.minute,b.dateTaken.second).getTime() : 0;
+      mediaItems.sort((a, b) => {
+        const timeA = a.dateTaken ? new Date(a.dateTaken.year, a.dateTaken.month-1, a.dateTaken.day, a.dateTaken.hour, a.dateTaken.minute, a.dateTaken.second).getTime() : 0;
+        const timeB = b.dateTaken ? new Date(b.dateTaken.year, b.dateTaken.month-1, b.dateTaken.day, b.dateTaken.hour, b.dateTaken.minute, b.dateTaken.second).getTime() : 0;
         return timeB - timeA;
       });
 
@@ -113,20 +119,20 @@ function initGallery(galleryId, lightboxId, jsonFile) {
     .catch(err => console.error('Error loading JSON:', err));
 
   // Lightbox controls
-  closeBtn.addEventListener('click', () => { lightbox.style.display='none'; });
-  prevBtn.addEventListener('click', () => { openLightbox((currentIndex-1+mediaItems.length)%mediaItems.length); });
-  nextBtn.addEventListener('click', () => { openLightbox((currentIndex+1)%mediaItems.length); });
-  lightbox.addEventListener('click', e => { if(e.target===lightbox) lightbox.style.display='none'; });
+  closeBtn.addEventListener('click', () => { lightbox.style.display = 'none'; });
+  prevBtn.addEventListener('click', () => { openLightbox((currentIndex - 1 + mediaItems.length) % mediaItems.length); });
+  nextBtn.addEventListener('click', () => { openLightbox((currentIndex + 1) % mediaItems.length); });
+  lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.style.display = 'none'; });
   document.addEventListener('keydown', e => {
-    if(lightbox.style.display==='flex'){
-      if(e.key==='ArrowLeft') openLightbox((currentIndex-1+mediaItems.length)%mediaItems.length);
-      else if(e.key==='ArrowRight') openLightbox((currentIndex+1)%mediaItems.length);
-      else if(e.key==='Escape') lightbox.style.display='none';
+    if (lightbox.style.display === 'flex') {
+      if (e.key === 'ArrowLeft') openLightbox((currentIndex - 1 + mediaItems.length) % mediaItems.length);
+      else if (e.key === 'ArrowRight') openLightbox((currentIndex + 1) % mediaItems.length);
+      else if (e.key === 'Escape') lightbox.style.display = 'none';
     }
   });
 }
 
 // Initialize all galleries
-initGallery('repairs-gallery','repairs-lightbox','repairs.json');
-initGallery('cardboard-gallery','cardboard-lightbox','2020-03-16_Cardboard-Packaging.json');
-initGallery('campus-gallery','campus-lightbox','2022-06-11_CampusPack.json');
+initGallery('repairs-gallery', 'repairs-lightbox', 'repairs.json');
+initGallery('cardboard-gallery', 'cardboard-lightbox', '2020-03-16_Cardboard-Packaging.json');
+initGallery('campus-gallery', 'campus-lightbox', '2022-06-11_CampusPack.json');
